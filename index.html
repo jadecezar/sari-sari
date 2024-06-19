@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Sari-Sari Store</title>
+<style>
+    /* CSS styles */
+body {
+    font-family: Cursive;
+    margin: 0;
+    padding: 0;
+    background-color: #f2f2f2;
+}
+
+.header {
+    background-color: #333;
+    padding: 10px;
+    text-align: center;
+    width:100%;
+    top: 0;
+}
+
+.header img {
+    height: 200px;
+    width: 300px;
+}
+	
+.container {
+    max-width: 800px;
+    margin: 0 auto;
+    padding: 20px;
+    background-color: #fff;
+    border-radius: 10px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+}
+
+button {
+    background-color: grey;
+    color: white;
+    padding: 10px 20px;
+    border: light-grey;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+button:hover {
+    background-color: teal;
+}
+
+.quantity {
+    display: none; /* Initially hide quantity buttons */
+    justify-content: space-around;
+    align-items: center;
+    margin-top: 10px;
+}
+
+.quantity button {
+    width: 25px;
+    height: 30px;
+    margin: 75px 25px; /* Reduced margin between buttons */
+}
+
+/* Navigation bar styles */
+.navbar {
+    background-color: #333;
+    padding: 10px 0;
+    text-align: center;
+    position: fixed;
+    width: 100%;
+    z-index: 999;
+}
+
+.navbar a {
+    color: white;
+    text-decoration: solid;
+    margin: 0 10px;
+    padding: 5px 10px;
+    border-radius: 5px;
+}
+
+.navbar a:hover {
+    background-color: #555;
+}
+
+/* Cart styles */
+#cartContainer {
+    display: none; /* Initially hide cart */
+    position: fixed;
+    top: 250px;
+    right: 50px;
+    padding: 30px;
+    background-color: #fff;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+    width: 400px; /* Set the width to your desired value */
+}
+
+#cartItems {
+    margin-top: 5px;
+    max-height: 500px; /* Set a maximum height for the cart items */
+    overflow-y: auto; /* Enable vertical scrolling when content exceeds the height */
+}
+
+.cart-item {
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 10px;
+    margin-bottom: 10px;
+    background-color: #f9f9f9;
+}
+
+.delete-button {
+    background-color: #f44336;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    padding: 5px 10px;
+    cursor: pointer;
+}
+
+.item img {
+    max-width: 300px;
+    max-height: 200px;
+    margin-bottom: 10px;
+    border-radius: 25px;
+}
+
+.size-options {
+    display: flex;
+    margin-bottom: 10px;
+}
+
+.size-options label {
+    margin-right: 10px;
+}
+
+h1 {
+    padding: 50px;
+    font-size: 50px;
+}
+
+</style>
+</head>
+<body>
+<div class="header">
+    <img src="logo_jc.jpg" alt="Logo">
+</div>
+<div class="navbar">
+    <a href="#levis">Jeans</a>
+    <a href="#Essentials">Shirts</a>
+    <a href="#ysl">Perfume</a>
+    <a href="#vneck">Sando</a>
+    <a href="#Trex">Toys</a>
+    <a href="#" onclick="viewCart()">View Cart</a>
+</div>
+<center>
+    <h1>JEANS</h1>
+    <div class="container">
+        <div id="levis" class="item">
+            <h3>Levi`s</h3>
+            <img src="levis.jpg" alt="levis">
+            <p>Name: Levis Jeans</p>
+            <p>Price: $50</p>
+            <p>Stock: <span id="stock1">20</span></p>
+            <button onclick="showQuantity('quantity_levis')">Add to Order</button>
+            <button onclick="addStock('levis')">Add Stock</button>
+            <div class="quantity" id="quantity_levis">
+                <button onclick="decreaseQuantity('quantity_levis')">-</button>
+                <span>1</span>
+                <button onclick="increaseQuantity('quantity_levis')">+</button>
+                <button onclick="addToOrder('Levis Jeans', 50, 'quantity_levis');">✓</button>
+            </div>
+            <button id="addToCart_levis" style="display: none;" onclick="addToCart('Levis Jeans', 50)">✓</button>
+        </div>
+<div id="wrangler" class="item">
+        <h3>Wrangler</h3>
+        <img src="wrangler.jpg" alt="wrangler">
+        <p>Name: Wrangler Jeans</p>
+        <p>Price: $50</p>
+        <p>Stock: <span id="stock2">20</span></p>
+        <button onclick="showQuantity('quantity_wrangler')">Add to Order</button>
+        <button onclick="addStock(2)">Add Stock</button> 
+        <div class="quantity" id="quantity_wrangler">
+            <button onclick="decreaseQuantity('quantity_wrangler')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_wrangler')">+</button>
+			<button onclick="addToOrder('Wrangler Jeans', 50, 'quantity_wrangler');">✓</button>        </div>
+        <button id="addToCart_wrangler" style="display: none;" onclick="addToCart('Wrangler Jeans', 50)">✓</button>
+
+    </div><button id="addStock_wrangler" style="display: none;" onclick="addStock('wrangler');">Add Stock</button>
+
+<div id="diesel" class="item">
+        <h3>Diesel</h3>
+        <img src="Diesel.jpg" alt="diesel">
+        <p>Name: Diesel Jeans</p>
+        <p>Price: $50</p>
+   <p>Stock: <span id="stock3">20</span></p>
+
+        <button onclick="showQuantity('quantity_diesel')">Add to Order</button>
+        <button onclick="addStock(3)">Add Stock</button> 
+        <div class="quantity" id="quantity_diesel">
+            <button onclick="decreaseQuantity('quantity_diesel')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_diesel')">+</button>
+            <button onclick="addToOrder('Diesel Jeans', 50, 'quantity_diesel');">✓</button>
+        </div>
+        <button id="addToCart_jeans" style="display: none;" onclick="addToCart('Diesel Jeans', 50)">✓</button>
+
+    </div><button id="addStock_wrangler" style="display: none;" onclick="addStock('wrangler');">Add Stock</button>
+<div id="ck" class="item">
+        <h3>Calvin Klein</h3>
+        <img src="ck.jpg" alt="ck">
+        <p>Name: Calvin Klein Jeans</p>
+        <p>Price: $50</p>
+		<p>Stock: <span id="stock4">20</span></p>
+
+        <button onclick="showQuantity('quantity_ck')">Add to Order</button>
+        <button onclick="addStock(4)">Add Stock</button> 
+        <div class="quantity" id="quantity_ck">
+            <button onclick="decreaseQuantity('quantity_ck')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_ck')">+</button>
+			<button onclick="addToOrder('Calvin Klein Jeans', 50, 'quantity_ck');">✓</button>        
+			</div>
+        <button id="addToCart_ck" style="display: none;" onclick="addToCart('Calvin klein , 50)">✓</button>
+
+    </div><button id="addStock_ck" style="display: none;" onclick="addStock('ck');">Add Stock</button>
+
+
+    <h1>T-SHIRTS</h1>
+        <div id="Essentials" class="item">
+            <h3>Essentials</h3>
+            <img src="esse.jpg" alt="esse">
+            <p>Name: Essentials Shirt</p>
+            <p>Price: $20</p>
+            <p>Stock: <span id="stock5">15</span></p>
+
+          
+            <button onclick="showQuantity('quantity_Essentials')">Add to Order</button>
+			<button onclick="addStock(5)">Add Stock</button> 
+            <div class="quantity" id="quantity_Essentials">
+                <button onclick="decreaseQuantity('quantity_Essentials')">-</button>
+                <span>1</span>
+                <button onclick="increaseQuantity('quantity_Essentials')">+</button>
+				<button onclick="addToOrder('Essentials Shirt', 50, 'quantity_Essentials');">✓</button>           
+				</div>
+            <button id="addToCart_Essentials" style="display: none;" onclick="addToCart('Essentials Shirt', 20)">✓</button>
+        </div>
+<div id="buck" class="item">
+        <h3>Buck Mason</h3>
+        <img src="buck.jpg" alt="buck">
+        <p>Name: Buck Mason Shirt</p>
+        <p>Price: $20</p>
+        <p>Stock: <span id="stock6">15<span></p>
+
+  <button onclick="showQuantity('quantity_buck')">Add to Order</button>
+  <button onclick="addStock(6)">Add Stock</button> 
+        <div class="quantity" id="quantity_buck">
+            <button onclick="decreaseQuantity('quantity_buck')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_buck')">+</button>
+<br>
+			<button onclick="addToOrder('Buck Mason Shirt', 50, 'quantity_buck');">✓</button>
+        </div>
+        <button id="addToCart_buck" style="display: none;" onclick="addToCart('Buck Mason Shirt', 20)">✓</button>
+    </div>
+
+<div id="alt" class="item">
+        <h3>Alternative</h3>
+        <img src="alt.jpg" alt="alt">
+        <p>Name: Alternative Shirt</p>
+        <p>Price: $20</p>
+  <p>Stock: <span id="stock7">15</span></p>
+
+        <button onclick="showQuantity('quantity_alt')">Add to Order</button>
+  <button onclick="addStock(7)">Add Stock</button> 
+        <div class="quantity" id="quantity_alt">
+            <button onclick="decreaseQuantity('quantity_alt')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_alt')">+</button>
+			<button onclick="addToOrder('Alternative Shirt', 50, 'quantity_alt');">✓</button> 
+			</div>
+       <button id="addToCart_alt" style="display: none;" onclick="addToCart('Alternative Shirt', 20)">✓</button>
+
+    </div>
+<div id="ever" class="item">
+        <h3>Everlane</h3>
+        <img src="ever.jpg" alt="ever">
+        <p>Name: Everlane Shirt</p>
+        <p>Price: $20</p>
+  <p>Stock: <span id="stock8">15</span></p>
+
+        <button onclick="showQuantity('quantity_ever')">Add to Order</button>
+  <button onclick="addStock(8)">Add Stock</button>
+
+        <div class="quantity" id="quantity_ever">
+            <button onclick="decreaseQuantity('quantity_ever')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_ever')">+</button>
+			<button onclick="addToOrder('Everlane Shirt', 50, 'quantity_ever');">✓</button> 
+			</div>
+        <button id="addToCart_ever" style="display: none;" onclick="addToCart('Everlane Shirt', 20)">✓</button>
+    </div>
+
+    <h1>PERFUME</h1>
+    <div id="ysl" class="item">
+        <h3>Yves Saint Laurent</h3>
+        <img src="ysl.jpg" alt="ysl">
+        <p>Name: Yves Saint Laurent Perfume</p>
+        <p>Price: $30</p>
+      <p>Stock: <span id="stock9">20</span></p>
+		<button onclick="showQuantity('quantity_ysl')">Add to Order</button>
+      <button onclick="addStock(9)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_ysl">
+            <button onclick="decreaseQuantity('quantity_ysl')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_ysl')">+</button>
+			<button onclick="addToOrder('Yves Saint Laurent Perfume', 50, 'quantity_ysl');">✓</button>
+        </div>
+        <button id="addToCart_ysl" style="display: none;" onclick="addToCart('Yves Saint Laurent Perfume', 30)">✓</button>
+    </div>
+<div id="gucci" class="item">
+        <h3>Gucci</h3>
+        <img src="gucci.jpg" alt="gucci">
+        <p>Name: Gucci Perfume</p>
+        <p>Price: $30</p>
+  <p>Stock: <span id="stock10">20</span></p>
+
+        <button onclick="showQuantity('quantity_gucci')">Add to Order</button>
+  <button onclick="addStock(10)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_gucci">
+            <button onclick="decreaseQuantity('quantity_gucci')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_gucci')">+</button>
+			<button onclick="addToOrder('Gucci Perfume', 50, 'quantity_gucci');">✓</button>   
+			</div>
+        <button id="addToCart_gucci" style="display: none;" onclick="addToCart('Gucci Perfume', 30)">✓</button>
+    </div>
+<div id="jo" class="item">
+        <h3>Jo Malone</h3>
+        <img src="jo.jpg" alt="jo">
+        <p>Name: Jo Malone Perfume</p>
+        <p>Price: $30</p>
+  <p>Stock: <span id="stock11">20</span></p>
+
+        <button onclick="showQuantity('quantity_jo')">Add to Order</button>
+  <button onclick="addStock(11)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_jo">
+            <button onclick="decreaseQuantity('quantity_jo')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_jo')">+</button>
+			<button onclick="addToOrder('Jo Malone Perfume', 50, 'quantity_jo');">✓</button>    
+			</div>
+        <button id="addToCart_jo" style="display: none;" onclick="addToCart('Jo Malone Perfume', 30)">✓</button>
+    </div>
+<div id="chanel" class="item">
+        <h3>Chanel</h3>
+        <img src="chanel.jpg" alt="chanel">
+        <p>Name: Chanel Perfume</p>
+        <p>Price: $30</p>
+		<p>Stock: <span id="stock12">20</span></p>
+
+        <button onclick="showQuantity('quantity_chanel')">Add to Order</button>
+        <button onclick="addStock(12)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_chanel">
+            <button onclick="decreaseQuantity('quantity_chanel')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_chanel')">+</button>
+			<button onclick="addToOrder('Chanel Perfume', 50, 'quantity_chanel');">✓</button>  
+			</div>
+        <button id="addToCart_chanel" style="display: none;" onclick="addToCart('Chanel Perfume', 30)">✓</button>
+    </div>
+
+    <h1>SANDO</h1>
+    <div id="vneck" class="item">
+        <h3>V-neck Sando</h3>
+        <img src="vneck.jpg" alt="vneck">
+        <p>Name: V-neck Sando</p>
+        <p>Price: $15</p>
+        <p>Stock: <span id="stock13">25</span></p>
+
+        <button onclick="showQuantity('quantity_vneck')">Add to Order</button>
+        <button onclick="addStock(13)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_vneck">
+            <button onclick="decreaseQuantity('quantity_vneck')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_vneck')">+</button>
+			<button onclick="addToOrder('V-neck Sando', 50, 'quantity_vneck');">✓</button>   
+			</div>
+        <button id="addToCart_vneck" style="display: none;" onclick="addToCart('V-neck Sando', 15)">✓</button>
+    </div>
+  <div id="mt" class="item">
+        <h3>Muscle Tee Sando</h3>
+        <img src="mt.jpg" alt="mt">
+        <p>Name: Muscle Tee Sando</p>
+        <p>Price: $15</p>
+    <p>Stock: <span id="stock14">25</span></p>
+
+        <button onclick="showQuantity('quantity_mt')">Add to Order</button>
+    <button onclick="addStock(14)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_mt">
+            <button onclick="decreaseQuantity('quantity_mt')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_mt')">+</button>
+			<button onclick="addToOrder('Muscle Tee Sando', 50, 'quantity_mt');">✓</button>   
+			</div>
+        <button id="addToCart_mt" style="display: none;" onclick="addToCart('Muscle Tee Sando', 15)">✓</button>
+    </div>
+  <div id="kneet" class="item">
+        <h3>Kneet Sando</h3>
+        <img src="kneet.jpg" alt="kneet">
+        <p>Name: Kneet Sando</p>
+        <p>Price: $15</p>
+    <p>Stock: <span id="stock15">25</span></p>
+
+        <button onclick="showQuantity('quantity_kneet')">Add to Order</button>
+<button onclick="addStock(15)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_kneet">
+            <button onclick="decreaseQuantity('quantity_kneet')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_kneet')">+</button>
+			<button onclick="addToOrder('Kneet Sando', 50, 'quantity_kneet');">✓</button>    
+			</div>
+        <button id="addToCart_kneet" style="display: none;" onclick="addToCart('Kneet Sando', 15)">✓</button>
+    </div>
+  <div id="jersey" class="item">
+        <h3>Jersey Sando</h3>
+        <img src="jersey.jpg" alt="jersey">
+        <p>Name: Jersey Sando</p>
+        <p>Price: $15</p>
+    <p>Stock: <span id="stock16">25</span></p>
+
+        <button onclick="showQuantity('quantity_jersey')">Add to Order</button>
+    <button onclick="addStock(16)">Add Stock</button>
+
+        <div class="quantity" id="quantity_jersey">
+            <button onclick="decreaseQuantity('quantity_jersey')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_jersey')">+</button>
+			<button onclick="addToOrder('Jersey Sando', 50, 'quantity_jersey');">✓</button>   
+			</div>
+        <button id="addToCart_jersey" style="display: none;" onclick="addToCart('Jersey Sando', 15)">✓</button>
+    </div>
+
+    <h1>TOYS</h1>
+    <div id="Trex" class="item">
+        <h3>T-rex</h3>
+        <img src="trex.jpg" alt="Trex">
+        <p>Name: T-Rex Toy</p>
+        <p>Price: $10</p>
+      <p>Stock: <span id="stock17">30</span></p>
+
+        <button onclick="showQuantity('quantity_Trex')">Add to Order</button>
+      <button onclick="addStock(17)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_Trex">
+            <button onclick="decreaseQuantity('quantity_Trex')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_Trex')">+</button>
+			<button onclick="addToOrder('Trex Toy', 50, 'quantity_Trex');">✓</button>    
+			</div>
+        <button id="addToCart_Trex" style="display: none;" onclick="addToCart('T-Rex', 10)">✓</button>
+    </div>
+<div id="dumpling" class="item">
+        <h3>Fluffy Dumpling</h3>
+        <img src="Dumpling.jpg" alt="dumpling">
+        <p>Name: Fluffy Dumpling</p>
+        <p>Price: $10</p>
+  <p>Stock: <span id="stock18">30</span></p>
+
+        <button onclick="showQuantity('quantity_dumpling')">Add to Order</button>
+  <button onclick="addStock(18)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_dumpling">
+            <button onclick="decreaseQuantity('quantity_dumpling')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_dumpling')">+</button>
+			<button onclick="addToOrder('Fluffy Dumpling Toy', 50, 'quantity_dumpling');">✓</button> 
+			</div>
+        <button id="addToCart_dumpling" style="display: none;" onclick="addToCart('Fluffy Dumpling', 10)">✓</button>
+    </div>
+<div id="Barbie" class="item">
+        <h3>Barbie</h3>
+        <img src="Barbie.jpg" alt="Barbie">
+        <p>Name: Barbie Doll</p>
+        <p>Price: $10</p>
+  <p>Stock: <span id="stock19">30</span></p>
+
+        <button onclick="showQuantity('quantity_Barbie')">Add to Order</button>
+  <button onclick="addStock(19)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_Barbie">
+            <button onclick="decreaseQuantity('quantity_Barbie')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_Barbie')">+</button>
+			<button onclick="addToOrder('Barbie Doll', 50, 'quantity_Barbie');">✓</button>    
+			</div>
+        <button id="addToCart_Barbie" style="display: none;" onclick="addToCart('Barbie Doll', 10)">✓</button>
+    </div>
+<div id="house" class="item">
+        <h3>Doll House</h3>
+        <img src="house.jpg" alt="house">
+        <p>Name: Doll House</p>
+        <p>Price: $10</p>
+  <p>Stock: <span id="stock0">30</span></p>
+
+        <button onclick="showQuantity('quantity_house')">Add to Order</button>
+  <button onclick="addStock(0)">Add Stock</button> 
+
+        <div class="quantity" id="quantity_house">
+            <button onclick="decreaseQuantity('quantity_house')">-</button>
+            <span>1</span>
+            <button onclick="increaseQuantity('quantity_house')">+</button>
+			<button onclick="addToOrder('Doll House', 50, 'quantity_house');">✓</button>   
+			</div>
+        <button id="addToCart_house" style="display: none;" onclick="addToCart('Doll House', 10)">✓</button>
+    </div>
+	
+</div>
+
+</center>
+<div id="cartContainer">
+    <h2>Cart</h2>
+    <div id="cartItems"></div>
+    <p>Total: <span id="totalAmount">$0</span></p>
+    <button id="exitCartButton" onclick="exitCart()">Exit</button>
+    <button id="payButton" onclick="pay()">Pay Now</button>
+	<div id="discount-options">
+    <h3>Discount Type</h3>
+    <label><input type="radio" name="discount" value="student" checked>Student Discount (10%)</label>
+    <label><input type="radio" name="discount" value="senior"> Senior Citizen Discount (20%)</label>
+    <label><input type="radio" name="discount" value="pwd">PWD Discount (30%)</label>
+  </div>
+</div>
+
+<script>
+let cart = [];
+
+// Function to show quantity buttons
+function showQuantity(quantityID) {
+    document.getElementById(quantityID).style.display = 'flex';
+}
+
+// Function to decrease quantity
+function decreaseQuantity(quantityID) {
+    var quantity = document.getElementById(quantityID).getElementsByTagName('span')[0];
+    var quantityValue = parseInt(quantity.textContent);
+    if (quantityValue > 1) {
+        quantity.textContent = quantityValue - 1;
+    }
+}
+
+// Function to increase quantity
+function increaseQuantity(quantityID) {
+    var quantity = document.getElementById(quantityID).getElementsByTagName('span')[0];
+    var quantityValue = parseInt(quantity.textContent);
+    quantity.textContent = quantityValue + 1;
+}
+
+// Function to add item to order
+function addToOrder(itemName, itemPrice, quantityID) {
+    var quantity = parseInt(document.getElementById(quantityID).getElementsByTagName('span')[0].textContent);
+    var order = {
+        name: itemName,
+        price: itemPrice,
+        quantity: quantity
+    };
+    cart.push(order);
+    alert("Added to order: " + itemName + "x" + quantity);
+    updateStock(itemName, quantity); // Deduct stock from total available stock
+    // Hide quantity buttons and check mark button after adding to order
+    document.getElementById(quantityID).style.display = 'none';
+    document.getElementById('addToCart_' + quantityID.split('_')[1]).style.display = 'none';
+    // Update cart display after adding to order
+    updateCart();
+}
+
+// Function to add item to cart
+function addToCart(itemName, itemPrice) {
+    var order = {
+        name: itemName,
+        price: itemPrice,
+
+    };
+    cart.push(order);
+    updateCart();
+}
+
+// Function to update cart
+function updateCart() {
+    var cartItemsDiv = document.getElementById('cartItems');
+    cartItemsDiv.innerHTML = ''; // Clear existing cart items
+    var totalAmount = 0;
+    for (var i = 0; i < cart.length; i++) {
+        var item = cart[i];
+        var cartItemDiv = document.createElement('div');
+        cartItemDiv.classList.add('cart-item');
+        var itemTotalPrice = item.price * item.quantity; // Calculate total price for the item
+        // Include quantity in the display
+        cartItemDiv.innerHTML = '<p>' + item.name + ' - Quantity: ' + item.quantity + ' - $' + itemTotalPrice + '</p><button class="delete-button" onclick="removeFromCart(' + i + ')">Remove</button>';
+        cartItemsDiv.appendChild(cartItemDiv);
+        totalAmount += itemTotalPrice; // Add the total price of the item to the total amount
+    }
+    document.getElementById('totalAmount').textContent = '$' + totalAmount.toFixed(2); // Update total amount
+    document.getElementById('cartContainer').style.display = 'block';	// Show cart
+    showAddToCartButtons(); // Show Add to Cart buttons
+}
+
+// Function to remove item from cart
+function removeFromCart(index) {
+    var removedItem = cart[index];
+    cart.splice(index, 1); // Remove item from cart array
+    updateStock(removedItem.name, -removedItem.quantity); // Add back stock for removed item
+    updateCart(); // Update cart display
+}
+
+// Function to view cart
+function viewCart() {
+    updateCart(); // Update cart before displaying
+    hideAddToOrderButtons(); // Hide Add to Order buttons
+}
+
+// Function to close cart
+function exitCart() {
+    document.getElementById('cartContainer').style.display = 'none'; // Hide cart
+    showAddToOrderButtons(); // Show Add to Order buttons when closing cart
+}
+
+// Function to pay
+function pay() {
+    if (cart.length === 0) {
+        alert("Your cart is empty. Please add items to proceed.");
+    } else {
+        // Here you would implement the payment process
+        alert("Payment successful. Thank you for your purchase!");
+        cart = []; // Clear the cart after successful payment
+        updateCart(); // Update cart display
+    }
+}
+
+// Function to show Add to Cart buttons
+function showAddToCartButtons() {
+    var addToCartButtons = document.getElementsByClassName('add-to-cart');
+    for (var i = 0; i < addToCartButtons.length; i++) {
+        addToCartButtons[i].style.display = 'block';
+    }
+}
+
+// Function to hide Add to Order buttons
+function hideAddToOrderButtons() {
+    var addToOrderButtons = document.getElementsByClassName('add-to-order');
+    for (var i = 0; i < addToOrderButtons.length; i++) {
+        addToOrderButtons[i].style.display = 'none';
+    }
+}
+
+// Function to add stock
+function addStock(itemNumber) {
+    var currentStock = parseInt(document.getElementById("stock" + itemNumber).innerText);
+    var addedStock = prompt("Enter the quantity to add for Item " + itemNumber + ":");
+    if (addedStock !== null && !isNaN(addedStock) && addedStock !== "") {
+        addedStock = parseInt(addedStock);
+        if (addedStock > 0) {
+            var newStock = currentStock + addedStock;
+            document.getElementById("stock" + itemNumber).innerText = newStock;
+        } else {
+            alert("Please enter a valid positive number.");
+        }
+    } else {
+        alert("Please enter a valid number.");
+    }
+}
+
+// Function to update stock
+function updateStock(itemName, quantity) {
+    let stock = {
+        "Levis Jeans": 20,
+        "Wrangler Jeans": 20,
+        "Diesel Jeans": 20,
+        "Calvin Klein Jeans": 20,
+        "Essentials Shirt": 15,
+        "Buck Mason Shirt": 15,
+        "Alternative Shirt": 15,
+        "Everlane Shirt": 15,
+        "Yves Saint Laurent Perfume": 20,
+        "Gucci Perfume": 20,
+        "Jo Malone Perfume": 20,
+        "Chanel Perfume": 20,
+        "V-neck Sando": 25,
+        "Muscle Tee Sando": 25,
+        "Kneet Sando": 25,
+        "Jersey Sando": 25,
+        "T-Rex": 30,
+        "Fluffy Dumpling": 30,
+        "Barbie Doll": 30,
+        "Doll House": 30
+    };
+    
+    if (stock[itemName] !== undefined) {
+        stock[itemName] -= quantity; // Deduct the quantity from available stock
+    } else {
+        console.log("Item not found in stock.");
+    }
+}
+
+
+// Function to apply discount to total amount
+function applyDiscount() {
+    let totalAmount = 0;
+
+    // Calculate total amount before discount
+    for (let i = 0; i < cart.length; i++) {
+        totalAmount += cart[i].price * cart[i].quantity;
+    }
+
+    // Apply discount based on selected option
+    const discountType = document.querySelector('input[name="discount"]:checked').value;
+    let discountPercentage = 0;
+    switch (discountType) {
+        case 'student':
+            discountPercentage = 0.1; // 10% discount for students
+            break;
+        case 'senior':
+            discountPercentage = 0.2; // 20% discount for senior citizens
+            break;
+        case 'pwd':
+            discountPercentage = 0.3; // 30% discount for PWD
+            break;
+        default:
+            discountPercentage = 0; // No discount if no option is selected
+            break;
+    }
+
+    // Calculate discounted amount
+    const discountedAmount = totalAmount * discountPercentage;
+    const amountToPay = totalAmount - discountedAmount;
+
+    // Update total amount displayed in the cart
+    document.getElementById('totalAmount').textContent = "$" + amountToPay.toFixed(2);
+}
+// Call applyDiscount function when the discount option is changed
+document.querySelectorAll('input[name="discount"]').forEach(item => {
+    item.addEventListener('change', applyDiscount);
+});
+
+</script>
+</body>
+</html>
